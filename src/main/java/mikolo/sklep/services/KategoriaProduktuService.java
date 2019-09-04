@@ -13,44 +13,44 @@ import mikolo.sklep.entity.Produkt;
 
 @Service
 public class KategoriaProduktuService {
-	
+
 	@Autowired
 	private KategoriaProduktuDAO kategoriaProduktuDAO;
-	
+
 	public KategoriaProduktu findById(long id) {
 		KategoriaProduktu kategoriaProduktu = kategoriaProduktuDAO.findById(id).get();
 		getProducentWithProductList(kategoriaProduktu);
 		return kategoriaProduktu;
 	}
-	
+
 	public List<KategoriaProduktu> findByNazwa(String nazwa) {
 		List<KategoriaProduktu> kategoriaProduktus = kategoriaProduktuDAO.findByNazwa(nazwa);
 		kategoriaProduktus.forEach(p -> getProducentWithProductList(p));
 		return kategoriaProduktus;
 	}
-	
+
 	public List<KategoriaProduktu> findAll() {
 		List<KategoriaProduktu> kategoriaProduktus = kategoriaProduktuDAO.findAll();
 		kategoriaProduktus.forEach(p -> getProducentWithProductList(p));
 		return kategoriaProduktus;
 	}
-	
+
 	public KategoriaProduktu update(KategoriaProduktu kategoriaProduktu) {
 		kategoriaProduktuDAO.save(kategoriaProduktu);
 		return kategoriaProduktu;
 	}
-	
+
 	public boolean delete(long id) {
 		KategoriaProduktu kategoriaProduktu = kategoriaProduktuDAO.findById(id).get();
 		Set<Produkt> produktSet = kategoriaProduktu.getProduktSet();
 
 		if (produktSet.stream().anyMatch(p -> p.getIdKategori() != null)) {
 			return false;
-		} 
+		}
 		kategoriaProduktuDAO.delete(kategoriaProduktu);
-			return true;
+		return true;
 	}
-	
+
 	private void getProducentWithProductList(KategoriaProduktu kategoriaProduktu) {
 		Set<Produkt> produktset = kategoriaProduktu.getProduktSet();
 		produktset.forEach(ps -> {

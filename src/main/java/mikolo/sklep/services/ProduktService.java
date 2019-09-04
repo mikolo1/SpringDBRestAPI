@@ -23,7 +23,7 @@ public class ProduktService {
 		getProductWithClientAndCategoryAndProducent(produkt);
 		return produkt;
 	}
-	
+
 	public Produkt findLast() {
 		Produkt produkt = produktDAO.findLast();
 		getProductWithClientAndCategoryAndProducent(produkt);
@@ -86,26 +86,27 @@ public class ProduktService {
 
 	@Transactional
 	public Produkt update(Produkt produkt) {
-			produktDAO.update(produkt.getId(), produkt.getCena(), produkt.getNazwa(), produkt.getIdKategori().getId(), produkt.getIdProducenta().getId());
+		produktDAO.update(produkt.getId(), produkt.getCena(), produkt.getNazwa(), produkt.getIdKategori().getId(),
+				produkt.getIdProducenta().getId());
 		return produkt;
 	}
-	
+
 	@Transactional
 	public Produkt add(Produkt produkt) {
-			produktDAO.save(produkt);
-			return produkt;
+		produktDAO.save(produkt);
+		return produkt;
 	}
-	
+
 	public boolean deleteById(long id) {
 		Produkt produkt = produktDAO.findById(id).get();
 		List<Klient> klientList = produkt.getKlient();
-		if(klientList.stream().anyMatch(k->k.getProduktList()!=null)){
+		if (klientList.stream().anyMatch(k -> k.getProduktList() != null)) {
 			return false;
 		}
 		produktDAO.delete(produkt);
 		return true;
 	}
-	
+
 	@Transactional
 	public void addZakupy(long produktId, long klientId) {
 		produktDAO.addZakupy(produktId, klientId);

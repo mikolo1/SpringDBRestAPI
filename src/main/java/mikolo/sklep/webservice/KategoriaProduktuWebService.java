@@ -42,12 +42,16 @@ public class KategoriaProduktuWebService {
 		return gson.toJson(kategoriaList);
 	}
 
-	@PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/update", 
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String update(@RequestBody KategoriaProduktu kategoriaProduktu) {
 		return gson.toJson(kategoriaProduktuService.update(kategoriaProduktu));
 	}
 
-	@PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/add", 
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String add(@RequestBody KategoriaProduktu kategoriaProduktu) {
 		return gson.toJson(kategoriaProduktuService.update(kategoriaProduktu));
 	}

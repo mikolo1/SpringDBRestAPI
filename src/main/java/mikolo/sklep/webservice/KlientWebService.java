@@ -60,13 +60,17 @@ public class KlientWebService {
 		return gson.toJson(klient);
 	}
 	
-	@PostMapping(value = "/addklientwithaddress", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/addklientwithaddress", 
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String addKlient(@RequestBody Klient klient) {
 		klientService.addKlient(klient);
 		return gson.toJson(klient);
 	}
 	
-	@PostMapping(value = "/updateklient", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/updateklient", 
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String updateKlient(@RequestBody Klient klient) {
 		klientService.update(klient);
 		return gson.toJson(klient);

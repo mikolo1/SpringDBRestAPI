@@ -60,7 +60,9 @@ public class AdresWebService {
 		return gson.toJson(adresList);
 	}
 	
-	@PostMapping(value="/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value="/update", 
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String updateAdres(@RequestBody Adres adres) {	
 		return gson.toJson(adresService.updateAdres(adres));
 	}

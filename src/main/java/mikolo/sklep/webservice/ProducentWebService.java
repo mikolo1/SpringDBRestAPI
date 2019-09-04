@@ -42,12 +42,16 @@ public class ProducentWebService {
 		return gson.toJson(producentList);
 	}
 
-	@PostMapping(value = "/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/update",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String update(@RequestBody Producent producent) {
 		return gson.toJson(producentService.updateOrAdd(producent));
 	}
 
-	@PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value = "/add",
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE, 
+			consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private String add(@RequestBody Producent producent) {
 		return gson.toJson(producentService.updateOrAdd(producent));
 	}

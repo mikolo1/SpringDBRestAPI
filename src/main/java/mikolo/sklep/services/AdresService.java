@@ -41,19 +41,19 @@ public class AdresService {
 		adresList.forEach(al -> getAdresWithKlient(al));
 		return adresList;
 	}
-	
+
 	public List<Adres> findByKodPocztowy(String kodPocztowy) {
 		List<Adres> adresList = adresDAO.findByKodPocztowy(kodPocztowy);
 		adresList.forEach(al -> getAdresWithKlient(al));
 		return adresList;
 	}
-	
+
 	public List<Adres> findByMiescowosc(String miejscowosc) {
 		List<Adres> adresList = adresDAO.findByMiejsowosc(miejscowosc);
 		adresList.forEach(al -> getAdresWithKlient(al));
 		return adresList;
 	}
-	
+
 	public List<Adres> findAll() {
 		List<Adres> adresList = adresDAO.findAll();
 		adresList.forEach(al -> getAdresWithKlient(al));
@@ -70,7 +70,7 @@ public class AdresService {
 		adresDAO.save(adres);
 		return adres;
 	}
-	
+
 	private void getAdresWithKlient(Adres adres) {
 		Klient klient = klientService.findById(adres.getIdKlienta().getId());
 		klient.setAdres(null);

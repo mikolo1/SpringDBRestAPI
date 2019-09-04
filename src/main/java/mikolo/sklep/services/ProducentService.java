@@ -17,7 +17,7 @@ public class ProducentService {
 
 	@Autowired
 	private ProducentDAO producentDAO;
-	
+
 	public Producent findById(long id) {
 		Producent producent = producentDAO.findById(id).get();
 		getProducentWithProductList(producent);
@@ -48,9 +48,9 @@ public class ProducentService {
 
 		if (produktSet.stream().anyMatch(p -> p.getIdProducenta() != null)) {
 			return false;
-		} 
-			producentDAO.delete(producent);
-			return true;
+		}
+		producentDAO.delete(producent);
+		return true;
 	}
 
 	private void getProducentWithProductList(Producent producent) {
