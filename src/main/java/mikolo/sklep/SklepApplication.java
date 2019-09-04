@@ -18,8 +18,11 @@ public class SklepApplication {
 		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
 //		ProducentRepository producentRepository = new ProducentRepository();
 //
-		KategoriaProduktu kategoriaProduktu = KategoriaProduktu.katProdBuilder().nazwa("Art. sportowe").build();
-		kategoriaProduktuRepository.addKategoriaProduktu(kategoriaProduktu);
+		KategoriaProduktu kategoriaProduktu = kategoriaProduktuRepository.findById(10);
+		kategoriaProduktu.setNazwa("Artykuły wędkarskie");
+		System.out.println(kategoriaProduktuRepository.updateKategoriaProduktu(kategoriaProduktu));
+//		kategoriaProduktuRepository.deleteKategoriaProduktuById(9);
+		
 //		
 //
 //		

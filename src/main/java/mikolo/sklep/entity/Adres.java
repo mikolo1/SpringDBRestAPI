@@ -40,9 +40,7 @@ public class Adres {
     public static AdresBuilder adresBuilder(){
         return new AdresBuilder();
     }
-
-    
-    
+  
     @Override
     public String toString() {
         return "Adres{" +

@@ -2,7 +2,6 @@ package mikolo.sklep.repositories;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -25,8 +24,8 @@ public class KlientRepository {
 
 	@Transactional
 	public Klient findById(long id) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		Klient klient = em.createQuery("from Klient WHERE id=:id", Klient.class).setParameter("id", id)
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Klient klient = session.createQuery("from Klient WHERE id=:id", Klient.class).setParameter("id", id)
 				.getSingleResult();
 
 		List<Produkt> produkty = produktRepository.findProduktKupionyByIdKlienta(id);
@@ -40,90 +39,108 @@ public class KlientRepository {
 			producent.setProdukt(null);
 			p.setIdProducenta(producent);
 		});
-
-		klient.setProduktList(produkty);
-		em.close();
+		session.close();
 		return klient;
 	}
 
 	public List<Klient> findAll() {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		List<Klient> klientList = em.createQuery("from Klient", Klient.class).getResultList();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Klient> klientList = session.createQuery("from Klient", Klient.class).getResultList();
 		addProductsToKlientList(klientList);
-		em.close();
+		session.close();
 		return klientList;
 	}
 
 	public List<Klient> findByImie(String imie) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		List<Klient> klientList = em.createQuery("from Klient WHERE imie LIKE CONCAT('%',:imie,'%')", Klient.class)
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Klient> klientList = session.createQuery("from Klient WHERE imie LIKE CONCAT('%',:imie,'%')", Klient.class)
 				.setParameter("imie", imie).getResultList();
 		addProductsToKlientList(klientList);
-		em.close();
+		session.close();
 		return klientList;
 	}
 
 	public List<Klient> findByNazwisko(String nazwisko) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		List<Klient> klientList = em
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Klient> klientList = session
 				.createQuery("from Klient WHERE nazwisko LIKE CONCAT('%',:nazwisko,'%')", Klient.class)
 				.setParameter("nazwisko", nazwisko).getResultList();
 		addProductsToKlientList(klientList);
-		em.close();
+		session.close();
 		return klientList;
 	}
 
 	public List<Klient> findByNrTelefonu(String nrTelefonu) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		List<Klient> klientList = em
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Klient> klientList = session
 				.createQuery("from Klient WHERE nrTelefonu LIKE CONCAT('%',:nrTelefonu,'%')", Klient.class)
 				.setParameter("nrTelefonu", nrTelefonu).getResultList();
 		addProductsToKlientList(klientList);
-		em.close();
+		session.close();
 		return klientList;
 	}
 
 	public Klient findOneByNrTelefonu(String nrTelefonu) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		Klient klient = em.createQuery("from Klient WHERE nrTelefonu =:nrTelefonu", Klient.class)
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Klient klient = session.createQuery("from Klient WHERE nrTelefonu =:nrTelefonu", Klient.class)
 				.setParameter("nrTelefonu", nrTelefonu).getSingleResult();
-		em.close();
+		List<Produkt> produkty = produktRepository.findProduktKupionyByIdKlienta(klient.getId());
+
+		produkty.forEach(p -> {
+			p.setKlient(null);
+			KategoriaProduktu katProduktu = kategoriaProduktuRepository.findById(p.getIdKategori().getId());
+			p.setIdKategori(katProduktu);
+			katProduktu.setProduktSet(null);
+			Producent producent = producentRepository.findById(p.getIdProducenta().getId());
+			producent.setProdukt(null);
+			p.setIdProducenta(producent);
+		});
+		klient.setProduktList(produkty);
+		session.close();
 		return klient;
 	}
 
 	@Transactional
 	public Klient addKlient(Klient klient, Adres adres) {
-		Session em = HibernateUtil.getSessionFactory().openSession();
-		em.persist(adres);
-		em.close();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.persist(adres);
+		session.flush();
+		session.close();
 		return klient;
 	}
 
 
 	public Klient addKlient(Klient klient) {
-		Session em = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Adres adres = klient.getAdres();
 		adres.setIdKlienta(klient);
-		em.merge(adres);
-		em.close();
+		session.merge(adres);
+		session.flush();
+		session.close();
 		return klient;
 	}
 
 	public Klient updateKlient(Klient klient) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
-		klient = (Klient) em.merge(klient);
-		em.close();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		klient = (Klient) session.merge(klient);
+		session.flush();
+		session.close();
 		return klient;
 	}
 
 	public void deleteKlientById(long id) {
-		EntityManager em = HibernateUtil.getSessionFactory().openSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Klient usuwany = findById(id);
 		if (usuwany != null) {
 			Adres adres = usuwany.getAdres();
-			em.remove(adres);
+			session.remove(adres);
 		}
-		em.close();
+		session.flush();
+		session.close();
 	}
 
 	private void addProductsToKlientList(List<Klient> klientList) {

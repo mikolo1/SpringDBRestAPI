@@ -2,8 +2,6 @@ package mikolo.sklep.repositories;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
@@ -16,91 +14,99 @@ import mikolo.sklep.utils.HibernateUtil;
 public class ProduktRepository {
 
     public Produkt findById(long id) {
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        Produkt produkt = em.createQuery("from Produkt WHERE id=:id", Produkt.class).setParameter("id", id).getSingleResult();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        Produkt produkt = session.createQuery("from Produkt WHERE id=:id", Produkt.class).setParameter("id", id).getSingleResult();
+        session.close();
         return produkt;
     }
 
     public Produkt findByProducentId(Producent idProducenta) {
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        Produkt produkt = em.createQuery("from Produkt WHERE idProducenta=:idProducenta", Produkt.class).setParameter("idProducenta", idProducenta).getSingleResult();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        Produkt produkt = session.createQuery("from Produkt WHERE idProducenta=:idProducenta", Produkt.class).setParameter("idProducenta", idProducenta).getSingleResult();
+        session.close();
         return produkt;
     }
 
     public Produkt findByKategoriaId(KategoriaProduktu idKategori) {
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        Produkt produkt = em.createQuery("from Produkt WHERE idKategori=:idKategori", Produkt.class).setParameter("idKategori", idKategori).getSingleResult();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        Produkt produkt = session.createQuery("from Produkt WHERE idKategori=:idKategori", Produkt.class).setParameter("idKategori", idKategori).getSingleResult();
+        session.close();
         return produkt;
     }
 
     public List<Produkt> findByNazwa(String nazwa) {
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        List<Produkt> produktList = em.createQuery("from Produkt WHERE nazwa LIKE CONCAT('%',:nazwa,'%')", Produkt.class).setParameter("nazwa", nazwa).getResultList();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Produkt> produktList = session.createQuery("from Produkt WHERE nazwa LIKE CONCAT('%',:nazwa,'%')", Produkt.class).setParameter("nazwa", nazwa).getResultList();
+        session.close();
         return produktList;
     }
 
     public List<Produkt> findByCena(double cena) {
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        List<Produkt> produktList = em.createQuery("from Produkt WHERE cena =:cena)", Produkt.class).setParameter("cena", cena).getResultList();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Produkt> produktList = session.createQuery("from Produkt WHERE cena =:cena)", Produkt.class).setParameter("cena", cena).getResultList();
+        session.close();
         return produktList;
     }
 
     public Produkt addProdukt(Produkt produkt){
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        em.persist(produkt);
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
+    	session.persist(produkt);
+    	session.flush();
+    	session.close();
         return produkt;
     }
 
     public Produkt addProduktWithProducentAndKategoriaProduktu(Produkt produkt, Producent producent, KategoriaProduktu kategoriaProduktu){
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         produkt.setIdProducenta(producent);
         produkt.setIdKategori(kategoriaProduktu);
-        em.persist(produkt);
-        em.close();
+        session.persist(produkt);
+        session.flush();
+        session.close();
         return produkt;
     }
 
     public Produkt updateProdukt(Produkt produkt){
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
-        produkt = (Produkt)em.merge(produkt);
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
+        produkt = (Produkt)session.merge(produkt);
+        session.flush();
+        session.close();
         return produkt;
     }
 
     public void deleteProduktById(long id){
-    	EntityManager em = HibernateUtil.getSessionFactory().openSession();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         Produkt usuwany = findById(id);
         if(usuwany!=null) {
-        	em.remove(usuwany);
+        	session.remove(usuwany);
         }
-        em.close();
+        session.flush();
+        session.close();
     }
 
     public List<Produkt> findAll(){
-    	Session em = HibernateUtil.getSessionFactory().openSession();
-        List<Produkt> produktList = em.createNativeQuery("select * from produkt", Produkt.class).getResultList();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Produkt> produktList = session.createNativeQuery("select * from produkt", Produkt.class).getResultList();
+        session.close();
         return produktList;
     }
 
 
     public List<Produkt> findProduktKupionyByIdProduktu(long idProduktu){
-    	Session em = HibernateUtil.getSessionFactory().openSession();
-        List<Produkt> produktList = em.createNativeQuery("SELECT p.* from produkt p join zakupy z on z.id_produkt = p.id_produktu WHERE p.id_produktu=:idProduktu", Produkt.class).setParameter("idProduktu", idProduktu).getResultList();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Produkt> produktList = session.createNativeQuery("SELECT p.* from produkt p join zakupy z on z.id_produkt = p.id_produktu WHERE p.id_produktu=:idProduktu", Produkt.class).setParameter("idProduktu", idProduktu).getResultList();
+        session.close();
         return produktList;
     }
 
     public List<Produkt> findProduktKupionyByIdKlienta(long idKlient){
-    	Session em = HibernateUtil.getSessionFactory().openSession();
-        List<Produkt> produktList = em.createNativeQuery("SELECT p.* from produkt p join zakupy z on z.id_produkt = p.id_produktu WHERE z.id_klient=:idKlient", Produkt.class).setParameter("idKlient", idKlient).getResultList();
-        em.close();
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Produkt> produktList = session.createNativeQuery("SELECT p.* from produkt p join zakupy z on z.id_produkt = p.id_produktu WHERE z.id_klient=:idKlient", Produkt.class).setParameter("idKlient", idKlient).getResultList();
+        session.close();
         return produktList;
     }
 }
