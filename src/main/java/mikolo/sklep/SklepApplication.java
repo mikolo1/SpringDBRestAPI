@@ -19,7 +19,7 @@ public class SklepApplication {
 //		ProducentRepository producentRepository = new ProducentRepository();
 //
 		KategoriaProduktu kategoriaProduktu = kategoriaProduktuRepository.findById(10);
-		kategoriaProduktu.setNazwa("Artykuły wędkarskie");
+		kategoriaProduktu.setNazwa("Artykuły różne");
 		System.out.println(kategoriaProduktuRepository.updateKategoriaProduktu(kategoriaProduktu));
 //		kategoriaProduktuRepository.deleteKategoriaProduktuById(9);
 		
