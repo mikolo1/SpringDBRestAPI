@@ -3,8 +3,7 @@ package mikolo.sklep;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import mikolo.sklep.entity.KategoriaProduktu;
-import mikolo.sklep.repositories.KategoriaProduktuRepository;
+import mikolo.sklep.repositories.KlientRepository;
 
 @SpringBootApplication
 public class SklepApplication {
@@ -12,15 +11,15 @@ public class SklepApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SklepApplication.class, args);
 
-//		KlientRepository klientRepository = new KlientRepository();
+		KlientRepository klientRepository = new KlientRepository();
 //		AdresRespository adresRespository = new AdresRespository();
 //		ProduktRepository produktRepository = new ProduktRepository();
-		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
+//		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
 //		ProducentRepository producentRepository = new ProducentRepository();
 //
-		KategoriaProduktu kategoriaProduktu = kategoriaProduktuRepository.findById(10);
-		kategoriaProduktu.setNazwa("Artykuły różne");
-		System.out.println(kategoriaProduktuRepository.updateKategoriaProduktu(kategoriaProduktu));
+//		KategoriaProduktu kategoriaProduktu = kategoriaProduktuRepository.findById(10);
+//		kategoriaProduktu.setNazwa("Artykuły różne");
+//		System.out.println(kategoriaProduktuRepository.updateKategoriaProduktu(kategoriaProduktu));
 //		kategoriaProduktuRepository.deleteKategoriaProduktuById(9);
 		
 //		
@@ -37,7 +36,7 @@ public class SklepApplication {
 //		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
 //		ProduktRepository produktRepository = new ProduktRepository();
 //		
-//		Klient klient = klientRepository.findById(94);
+		System.out.println(klientRepository.findById(93));
 
 //		Adres adres = adresRespository.findByKlientId(klient);
 //		System.out.println(adres);

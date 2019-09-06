@@ -25,6 +25,7 @@ public class KlientRepository {
 	@Transactional
 	public Klient findById(long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Klient klient = session.createQuery("from Klient WHERE id=:id", Klient.class).setParameter("id", id)
 				.getSingleResult();
 

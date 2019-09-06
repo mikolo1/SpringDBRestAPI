@@ -53,7 +53,7 @@ public class Klient {
 	@Override
 	public String toString() {
 		return "Klient [id=" + id + ", imie=" + imie + ", nazwisko=" + nazwisko + ", nrTelefonu=" + nrTelefonu
-				+ ", adres=" + adres + ", produktList=" + produktList + "]";
+				+ ", adres=" + adres ;
 	}
 
 	public Klient(String imie, String nazwisko, String nrTelefonu, Adres adres) {
