@@ -14,6 +14,7 @@ public class AdresRespository {
 	
     public Adres findById(long id) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         Adres adres = session.createQuery("from Adres WHERE id=:id", Adres.class).setParameter("id", id).getSingleResult();
         session.close();
         return adres;
@@ -21,6 +22,7 @@ public class AdresRespository {
 
     public List<Adres> findAll(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Adres> adresList = session.createQuery("from Adres", Adres.class).getResultList();
         session.close();
         return adresList;
@@ -28,6 +30,7 @@ public class AdresRespository {
 
     public Adres findByKlientId(Klient idKlienta) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         Adres adres = session.createQuery("from Adres WHERE idKlienta=:idKlienta", Adres.class).setParameter("idKlienta", idKlienta).getSingleResult();
         session.close();
         return adres;
@@ -35,6 +38,7 @@ public class AdresRespository {
 
     public List<Adres> findByUlica(String ulica) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Adres> adresLlist = session.createQuery("from Adres WHERE ulica LIKE CONCAT('%',:gatunek,'%')", Adres.class).setParameter("ulica", ulica).getResultList();
         session.close();
         return adresLlist;
@@ -42,6 +46,7 @@ public class AdresRespository {
 
     public List<Adres> findByNrDomu(String nrDomu) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Adres> adresLlist = session.createQuery("from Adres WHERE nrDomu LIKE CONCAT('%',:nrdomu,'%')", Adres.class).setParameter("nrdomu", nrDomu).getResultList();
         session.close();
         return adresLlist;
@@ -49,6 +54,7 @@ public class AdresRespository {
 
     public List<Adres> findByNrMieszkania(String nrMieszkania) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Adres> adresLlist = session.createQuery("from Adres WHERE nrMieszkania LIKE CONCAT('%',:nrmieszkania,'%')", Adres.class).setParameter("nrmieszkania", nrMieszkania).getResultList();
         session.close();
         return adresLlist;
@@ -56,6 +62,7 @@ public class AdresRespository {
 
     public List<Adres> findByMiejscowosc(String miejscowosc) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Adres> adresLlist = session.createQuery("from Adres WHERE miejscowosc LIKE CONCAT('%',:miejscowosc,'%')", Adres.class).setParameter("miejscowosc", miejscowosc).getResultList();
         session.close();
         return adresLlist;
@@ -63,6 +70,7 @@ public class AdresRespository {
 
     public List<Adres> findByKodPocztowy(String kodPocztowy) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Adres> adresLlist = session.createQuery("from Adres WHERE kodPocztowy=:kodPocztowy)", Adres.class).setParameter("kodPocztowy", kodPocztowy).getResultList();
         session.close();
         return adresLlist;
@@ -96,5 +104,4 @@ public class AdresRespository {
         session.flush();
         session.close();
     }
-
 }

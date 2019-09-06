@@ -99,10 +99,8 @@ public class KlientService {
 		Adres adres = adresDAO.findByKlient(findById(id));
 		if (adres != null) {
 			adresDAO.deleteByKlientId(id);
-		} else {
-			klientDAO.deleteById(id);
 		}
-		adresDAO.deleteByKlientId(id);
+		klientDAO.deleteById(id);
 	}
 
 	private List<Produkt> getKlientWithProducts(Klient klient) {

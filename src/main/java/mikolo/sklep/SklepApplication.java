@@ -36,7 +36,7 @@ public class SklepApplication {
 //		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
 //		ProduktRepository produktRepository = new ProduktRepository();
 //		
-		System.out.println(klientRepository.findById(93));
+		System.out.println(klientRepository.findById(128));
 
 //		Adres adres = adresRespository.findByKlientId(klient);
 //		System.out.println(adres);

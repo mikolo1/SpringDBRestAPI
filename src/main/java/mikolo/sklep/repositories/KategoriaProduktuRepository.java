@@ -14,6 +14,7 @@ public class KategoriaProduktuRepository {
 
     public KategoriaProduktu findById(long id) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         KategoriaProduktu kategoriaProduktu = session.createQuery("from KategoriaProduktu WHERE id=:id", KategoriaProduktu.class).setParameter("id", id).getSingleResult();
         session.close();
         return kategoriaProduktu;
@@ -21,6 +22,7 @@ public class KategoriaProduktuRepository {
 
     public List<KategoriaProduktu> findAll(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<KategoriaProduktu> kategoriaProduktuList = session.createNativeQuery("select * from kategoria_produktu", KategoriaProduktu.class).getResultList();
         session.close();
         return kategoriaProduktuList;
@@ -28,6 +30,7 @@ public class KategoriaProduktuRepository {
 
     public List<KategoriaProduktu> findByNazwa(String nazwa) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<KategoriaProduktu> kategoriaProduktuList = session.createQuery("from KategoriaProduktu WHERE nazwa LIKE CONCAT('%',:nazwa,'%')", KategoriaProduktu.class).setParameter("nazwa", nazwa).getResultList();
         session.close();
         return kategoriaProduktuList;

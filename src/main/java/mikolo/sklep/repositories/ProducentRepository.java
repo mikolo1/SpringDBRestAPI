@@ -13,6 +13,7 @@ public class ProducentRepository {
 
     public Producent findById(long id) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         Producent producent = session.createQuery("from Producent WHERE id=:id", Producent.class).setParameter("id", id).getSingleResult();
         session.close();
         return producent;
@@ -20,6 +21,7 @@ public class ProducentRepository {
 
     public List<Producent> findAll(){
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Producent> producentList = session.createQuery("from Producent", Producent.class).getResultList();
         session.close();
         return producentList;
@@ -27,6 +29,7 @@ public class ProducentRepository {
 
     public List<Producent> findByNazwa(String nazwa) {
     	Session session = HibernateUtil.getSessionFactory().openSession();
+    	session.beginTransaction();
         List<Producent> producentList = session.createQuery("from Producent WHERE nazwa LIKE CONCAT('%',:nazwa,'%')", Producent.class).setParameter("nazwa", nazwa).getResultList();
         session.close();
         return producentList;

@@ -15,6 +15,7 @@ public class ProduktRepository {
 
 	public Produkt findById(long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Produkt produkt = session.createQuery("from Produkt WHERE id=:id", Produkt.class).setParameter("id", id)
 				.getSingleResult();
 		session.close();
@@ -23,6 +24,7 @@ public class ProduktRepository {
 
 	public Produkt findByProducentId(Producent idProducenta) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Produkt produkt = session.createQuery("from Produkt WHERE idProducenta=:idProducenta", Produkt.class)
 				.setParameter("idProducenta", idProducenta).getSingleResult();
 		session.close();
@@ -31,6 +33,7 @@ public class ProduktRepository {
 
 	public Produkt findByKategoriaId(KategoriaProduktu idKategori) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Produkt produkt = session.createQuery("from Produkt WHERE idKategori=:idKategori", Produkt.class)
 				.setParameter("idKategori", idKategori).getSingleResult();
 		session.close();
@@ -39,6 +42,7 @@ public class ProduktRepository {
 
 	public List<Produkt> findByNazwa(String nazwa) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Produkt> produktList = session
 				.createQuery("from Produkt WHERE nazwa LIKE CONCAT('%',:nazwa,'%')", Produkt.class)
 				.setParameter("nazwa", nazwa).getResultList();
@@ -48,6 +52,7 @@ public class ProduktRepository {
 
 	public List<Produkt> findByCena(double cena) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Produkt> produktList = session.createQuery("from Produkt WHERE cena =:cena)", Produkt.class)
 				.setParameter("cena", cena).getResultList();
 		session.close();
@@ -104,6 +109,7 @@ public class ProduktRepository {
 
 	public List<Produkt> findProduktKupionyByIdProduktu(long idProduktu) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Produkt> produktList = session.createNativeQuery(
 				"SELECT p.* from produkt p join zakupy z on z.id_produkt = p.id_produktu WHERE p.id_produktu=:idProduktu",
 				Produkt.class).setParameter("idProduktu", idProduktu).getResultList();
@@ -113,6 +119,7 @@ public class ProduktRepository {
 
 	public List<Produkt> findProduktKupionyByIdKlienta(long idKlient) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Produkt> produktList = session.createNativeQuery(
 				"SELECT p.* from produkt p join zakupy z on z.id_produkt = p.id_produktu WHERE z.id_klient=:idKlient",
 				Produkt.class).setParameter("idKlient", idKlient).getResultList();

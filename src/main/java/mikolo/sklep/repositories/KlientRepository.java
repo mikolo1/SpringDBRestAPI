@@ -46,6 +46,7 @@ public class KlientRepository {
 
 	public List<Klient> findAll() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Klient> klientList = session.createQuery("from Klient", Klient.class).getResultList();
 		addProductsToKlientList(klientList);
 		session.close();
@@ -54,6 +55,7 @@ public class KlientRepository {
 
 	public List<Klient> findByImie(String imie) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Klient> klientList = session.createQuery("from Klient WHERE imie LIKE CONCAT('%',:imie,'%')", Klient.class)
 				.setParameter("imie", imie).getResultList();
 		addProductsToKlientList(klientList);
@@ -63,6 +65,7 @@ public class KlientRepository {
 
 	public List<Klient> findByNazwisko(String nazwisko) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Klient> klientList = session
 				.createQuery("from Klient WHERE nazwisko LIKE CONCAT('%',:nazwisko,'%')", Klient.class)
 				.setParameter("nazwisko", nazwisko).getResultList();
@@ -73,6 +76,7 @@ public class KlientRepository {
 
 	public List<Klient> findByNrTelefonu(String nrTelefonu) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		List<Klient> klientList = session
 				.createQuery("from Klient WHERE nrTelefonu LIKE CONCAT('%',:nrTelefonu,'%')", Klient.class)
 				.setParameter("nrTelefonu", nrTelefonu).getResultList();
@@ -83,6 +87,7 @@ public class KlientRepository {
 
 	public Klient findOneByNrTelefonu(String nrTelefonu) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
 		Klient klient = session.createQuery("from Klient WHERE nrTelefonu =:nrTelefonu", Klient.class)
 				.setParameter("nrTelefonu", nrTelefonu).getSingleResult();
 		List<Produkt> produkty = produktRepository.findProduktKupionyByIdKlienta(klient.getId());
