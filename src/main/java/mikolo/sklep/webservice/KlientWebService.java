@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -76,7 +77,7 @@ public class KlientWebService {
 		return gson.toJson(klient);
 	}
 	
-	@GetMapping(value = "/deleteid={id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/deleteid={id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private void deleteKlientById(@PathVariable("id") long id) {
 		klientService.delete(id);
 	}
