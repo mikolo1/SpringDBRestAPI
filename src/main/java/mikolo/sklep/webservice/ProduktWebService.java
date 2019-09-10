@@ -1,6 +1,7 @@
 package mikolo.sklep.webservice;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -81,9 +82,14 @@ public class ProduktWebService {
 		return gson.toJson(produktService.add(produkt));
 	}
 
+//	@GetMapping(value = "/dodajzakup/produkt={produktId}&klient={klientId}")
+//	private void addZakupy(@PathVariable long produktId, @PathVariable long klientId) {
+//		produktService.addZakupy(produktId, klientId);
+//	}
+	
 	@GetMapping(value = "/dodajzakup/produkt={produktId}&klient={klientId}")
-	private void addZakupy(@PathVariable long produktId, @PathVariable long klientId) {
-		produktService.addZakupy(produktId, klientId);
+	private void addZakupy(@PathVariable Map<String, String> pathVariable) {
+		produktService.addZakupy(Long.valueOf(pathVariable.get("produktId")), Long.valueOf(pathVariable.get("klientId")));
 	}
 
 	@DeleteMapping(value = "/delete&id={id}")
