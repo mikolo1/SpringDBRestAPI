@@ -24,7 +24,7 @@ public class AdresWebService {
 	private AdresService adresService;
 	private Gson gson;
 	
-	@GetMapping(value="/id={id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping("/id={id}")
 	private String getById(@PathVariable("id") long id) {
 		Adres adres = adresService.findById(id);
 		return gson.toJson(adres);
