@@ -3,15 +3,13 @@ package mikolo.sklep;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import mikolo.sklep.repositories.KlientRepository;
-
 @SpringBootApplication
 public class SklepApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SklepApplication.class, args);
 
-		KlientRepository klientRepository = new KlientRepository();
+//		KlientRepository klientRepository = new KlientRepository();
 //		AdresRespository adresRespository = new AdresRespository();
 //		ProduktRepository produktRepository = new ProduktRepository();
 //		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
@@ -36,7 +34,7 @@ public class SklepApplication {
 //		KategoriaProduktuRepository kategoriaProduktuRepository = new KategoriaProduktuRepository();
 //		ProduktRepository produktRepository = new ProduktRepository();
 //		
-		System.out.println(klientRepository.findById(128));
+//		System.out.println(klientRepository.findById(128));
 
 //		Adres adres = adresRespository.findByKlientId(klient);
 //		System.out.println(adres);

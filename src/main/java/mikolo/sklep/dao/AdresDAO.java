@@ -16,7 +16,7 @@ public interface AdresDAO extends JpaRepository<Adres, Long>{
 	
 	@Query(value="SELECT n FROM Adres n WHERE idKlienta =:idKlienta")
 	public Adres findByKlient(@Param ("idKlienta") Klient idKlienta);
-	
+
 	@Query(value="SELECT * FROM adres WHERE id_klient =:idKlienta limit 1", nativeQuery = true)
 	public Adres findByKlientId(@Param ("idKlienta") long idKlienta);
 	
